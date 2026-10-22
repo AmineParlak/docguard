@@ -15,5 +15,12 @@ def belge_oku(dosya_adi):
         print(f"Hata: '{dosya_adi}' adlı dosya bulunamadı.")
         return None
 
-print(belge_oku("ornek_belge.txt"))
-print(belge_oku("olmayan.txt"))
+def sistem_mesaji_olustur(belge):
+    talimat = ( "Sen bir belge asistanısın. "
+               "Yalnızca aşağıdaki belgeye dayanarak cevap ver. "
+               "Cevap belgede yoksa 'Bilmiyorum' de, tahmin yürütme. "
+               "Kısa ve nazik bir şekilde cevap ver. Düz metin yaz. ")
+    return talimat + "\n\nBELGE:\n" + belge
+
+belge = belge_oku("ornek_belge.txt")
+print(sistem_mesaji_olustur(belge))
