@@ -22,5 +22,17 @@ def sistem_mesaji_olustur(belge):
                "Kısa ve nazik bir şekilde cevap ver. Düz metin yaz. ")
     return talimat + "\n\nBELGE:\n" + belge
 
+def cevap_al(gecmis):
+    cevap = client.chat.completions.create(
+        model=MODEL,
+        messages=gecmis,    
+    )
+    return cevap.choices[0].message.content
+
+
 belge = belge_oku("ornek_belge.txt")
-print(sistem_mesaji_olustur(belge))
+gecmis = [
+    {"role": "system", "content": sistem_mesaji_olustur(belge)},
+    {"role": "user", "content": "Şirketin kaç çalışanı var?"},
+]
+print(cevap_al(gecmis))
