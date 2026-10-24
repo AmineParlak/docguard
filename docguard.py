@@ -11,7 +11,7 @@ def belge_oku(dosya_adi):
     try:
         with open(dosya_adi, "r", encoding="utf-8") as dosya:
             return dosya.read()
-    except FileNotFoundError:
+    except OSError:
         print(f"Hata: '{dosya_adi}' adlı dosya bulunamadı.")
         return None
 
@@ -30,9 +30,26 @@ def cevap_al(gecmis):
     return cevap.choices[0].message.content
 
 
-belge = belge_oku("ornek_belge.txt")
-gecmis = [
-    {"role": "system", "content": sistem_mesaji_olustur(belge)},
-    {"role": "user", "content": "Şirketin kaç çalışanı var?"},
-]
-print(cevap_al(gecmis))
+def main():
+    print("docguard - Güvenli Belge Asistanı")
+    while True:
+        dosya_adi = input("Belge dosyasının adı: ")
+        belge = belge_oku(dosya_adi)
+        if belge is not None:
+            break
+    print("Belge başarıyla yüklendi. Sorularınızı sorabilirsiniz.")
+
+    gecmis = [{"role": "system", "content": sistem_mesaji_olustur(belge)}]
+    while True:
+        soru = input("Sen: ")
+        if soru.strip().lower() == "çıkış":
+            print("Görüşürüz!")
+            break
+        gecmis.append({"role": "user", "content": soru})
+        cevap = cevap_al(gecmis)
+        print("Asistan: ", cevap)
+        gecmis.append({"role": "assistant", "content": cevap})  
+        
+
+if __name__ == "__main__":
+    main()
