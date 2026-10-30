@@ -47,7 +47,7 @@ def main():
             break
         gecmis.append({"role": "user", "content": soru})
         cevap = cevap_al(gecmis)
-        print("Asistan: ", cevap)
+        print("Asistan:", cevap)
         gecmis.append({"role": "assistant", "content": cevap})  
         
 
