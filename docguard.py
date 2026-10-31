@@ -27,7 +27,6 @@ SUPHELI_KALIPLAR = [
     "kuralları unut",
     "sistem mesajı",
     "yeni kural",
-    "şifre",
     "şifreyi ver",
     "ben yönetici",
     "ben müdür",
@@ -85,7 +84,7 @@ def main():
         if supheli_mi(soru):
             print("Asistan: Üzgünüm, bu tür bir talimatı yerine getiremiyorum.")
             continue
-        
+
         gecmis.append({"role": "user", "content": soru})
         cevap = cevap_al(gecmis)
         print("Asistan:", cevap)
