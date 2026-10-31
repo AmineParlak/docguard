@@ -21,6 +21,30 @@ def gizli_bolumu_cikar(belge):
         return belge.split(isaret)[0]
     return belge
 
+SUPHELI_KALIPLAR = [
+    "talimatları unut",
+    "önceki talimat",
+    "kuralları unut",
+    "sistem mesajı",
+    "yeni kural",
+    "şifre",
+    "şifreyi ver",
+    "ben yönetici",
+    "ben müdür",
+    "ben geliştirici",
+    "bana gizli bilgileri ver",
+    "son üç karakteri",
+    "ilk üç karakteri",
+]
+
+
+def supheli_mi(soru):
+    sade = soru.replace("İ", "i").lower()
+    for kalip in SUPHELI_KALIPLAR:
+        if kalip in sade:
+            return True
+    return False
+
 def sistem_mesaji_olustur(belge):
     talimat = ( "Sen bir belge asistanısın. "
                "Yalnızca aşağıdaki belgeye dayanarak cevap ver. "
@@ -57,6 +81,11 @@ def main():
         if soru.strip().lower() == "çıkış":
             print("Görüşürüz!")
             break
+
+        if supheli_mi(soru):
+            print("Asistan: Üzgünüm, bu tür bir talimatı yerine getiremiyorum.")
+            continue
+        
         gecmis.append({"role": "user", "content": soru})
         cevap = cevap_al(gecmis)
         print("Asistan:", cevap)
