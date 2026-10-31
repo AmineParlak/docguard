@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 from groq import Groq
+from groq import APIError
+
 
 load_dotenv(override=True)
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
@@ -77,12 +79,15 @@ def sistem_mesaji_olustur(belge):
     return talimat + "\n\n<belge>\n" + belge + "\n</belge>" 
 
 def cevap_al(gecmis):
-    cevap = client.chat.completions.create(
-        model=MODEL,
-        messages=gecmis,    
-    )
-    return cevap.choices[0].message.content
-
+    try:
+        cevap = client.chat.completions.create(
+            model=MODEL,
+            messages=gecmis,    
+        )
+        return cevap.choices[0].message.content
+    except APIError as e:
+        print("Hata: Modele ulaşılamadı. Bağlantını kontrol edip tekrar dene.")
+        return None
 
 def main():
     print("docguard - Güvenli Belge Asistanı")
@@ -112,6 +117,9 @@ def main():
 
         gecmis.append({"role": "user", "content": soru})
         cevap = cevap_al(gecmis)
+        if cevap is None:
+           gecmis.pop()  # Remove the last user message if the API call failed
+           continue
         print("Asistan:", cevap)
         gecmis.append({"role": "assistant", "content": cevap})  
         
