@@ -107,6 +107,7 @@ def main():
             continue
 
         if belge_supheli_mi(belge):
+            kayit_yaz("Şüpheli Belge", dosya_adi)
             print("UYARI: Bu belge yapay zekaya yönelik talimatlar içeriyor olabilir. Güvenlik nedeniyle yüklenmedi.")
             continue
         break
@@ -122,6 +123,7 @@ def main():
             break
 
         if supheli_mi(soru):
+            kayit_yaz("Şüpheli Soru", soru)
             print("Asistan: Üzgünüm, bu tür bir talimatı yerine getiremiyorum.")
             continue
 
