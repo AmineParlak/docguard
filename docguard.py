@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from groq import Groq
 from groq import APIError
+from datetime import datetime
 
 
 load_dotenv(override=True)
@@ -64,6 +65,14 @@ def belge_supheli_mi(belge):
             return True
     return False
 
+LOG_DOSYASI = "guvenlik.log"
+
+def kayit_yaz(olay, ayrinti):
+    zaman = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open(LOG_DOSYASI, "a", encoding="utf-8") as dosya:
+        dosya.write(f"[{zaman}] {olay}: {ayrinti}\n")
+
+
 def sistem_mesaji_olustur(belge):
     talimat = ( "Sen bir belge asistanısın. "
                "Yalnızca aşağıdaki belgeye dayanarak cevap ver. "
@@ -96,6 +105,7 @@ def main():
         belge = belge_oku(dosya_adi)
         if belge is None:
             continue
+
         if belge_supheli_mi(belge):
             print("UYARI: Bu belge yapay zekaya yönelik talimatlar içeriyor olabilir. Güvenlik nedeniyle yüklenmedi.")
             continue
