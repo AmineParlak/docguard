@@ -15,7 +15,7 @@ def belge_oku(dosya_adi):
         with open(dosya_adi, "r", encoding="utf-8") as dosya:
             return dosya.read()
     except OSError:
-        print(f"Hata: '{dosya_adi}' adlı dosya bulunamadı.")
+        print(f"Hata: '{dosya_adi}' adlı dosya açılamadı.")
         return None
 
 def gizli_bolumu_cikar(belge):
