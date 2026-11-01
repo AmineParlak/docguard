@@ -65,9 +65,25 @@ def belge_supheli_mi(belge):
             return True
     return False
 
+CEVAP_YASAKLI_KALIPLAR = [
+    "şifrenizi",
+    "parolanızı",
+    "kart numaranızı",
+    "hesabınızı doğrula",
+]
+
+def cevap_supheli_mi(cevap):
+    sade = cevap.replace("İ", "i").lower()
+    for kalip in CEVAP_YASAKLI_KALIPLAR:
+        if kalip in sade:
+            return True
+    return False
+
+
 LOG_DOSYASI = "guvenlik.log"
 
 def kayit_yaz(olay, ayrinti):
+    ayrinti = ayrinti.replace("\n", " ")
     zaman = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(LOG_DOSYASI, "a", encoding="utf-8") as dosya:
         dosya.write(f"[{zaman}] {olay}: {ayrinti}\n")
@@ -126,14 +142,18 @@ def main():
             kayit_yaz("Şüpheli Soru", soru)
             print("Asistan: Üzgünüm, bu tür bir talimatı yerine getiremiyorum.")
             continue
-
         gecmis.append({"role": "user", "content": soru})
         cevap = cevap_al(gecmis)
         if cevap is None:
-           gecmis.pop()  # Remove the last user message if the API call failed
-           continue
+            gecmis.pop()
+            continue
+        if cevap_supheli_mi(cevap):
+            kayit_yaz("Şüpheli Cevap", cevap)
+            gecmis.pop()
+            print("Asistan: Bu cevap güvenlik denetiminden geçemedi.")
+            continue
         print("Asistan:", cevap)
-        gecmis.append({"role": "assistant", "content": cevap})  
+        gecmis.append({"role": "assistant", "content": cevap})
         
 
 if __name__ == "__main__":
