@@ -89,6 +89,15 @@ def kayit_yaz(olay, ayrinti):
         dosya.write(f"[{zaman}] {olay}: {ayrinti}\n")
 
 
+GECMIS_SINIRI = 10
+
+def gecmisi_kirp(gecmis):
+    if len(gecmis) > GECMIS_SINIRI + 1:
+        return [gecmis[0]] + gecmis[-GECMIS_SINIRI:]
+    return gecmis
+
+
+
 def sistem_mesaji_olustur(belge):
     talimat = ( "Sen bir belge asistanısın. "
                "Yalnızca aşağıdaki belgeye dayanarak cevap ver. "
@@ -154,7 +163,7 @@ def main():
             continue
         print("Asistan:", cevap)
         gecmis.append({"role": "assistant", "content": cevap})
-        
+        gecmis = gecmisi_kirp(gecmis)
 
 if __name__ == "__main__":
     main()

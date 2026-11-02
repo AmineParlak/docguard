@@ -1,4 +1,5 @@
-from docguard import supheli_mi, belge_supheli_mi, gizli_bolumu_cikar
+from docguard import supheli_mi, belge_supheli_mi, gizli_bolumu_cikar, gecmisi_kirp, GECMIS_SINIRI  
+from docguard import CEVAP_YASAKLI_KALIPLAR, cevap_supheli_mi   
 
 
 def test_talimat_ezme_yakalanir():
@@ -20,3 +21,20 @@ def test_gizli_bolumu_cikar_test():
     sonuc = gizli_bolumu_cikar(belge)
     assert "gizlidir" not in sonuc 
 
+def test_cevap_supheli_yakalanir():
+    for kalip in CEVAP_YASAKLI_KALIPLAR:
+        assert cevap_supheli_mi(f"Lütfen {kalip} ver") == True
+
+def test_cevap_masum_gecer():
+    assert cevap_supheli_mi("Yıllık izin kaç gün?") == False        
+
+def test_gecmis_kirpilir():
+    gecmis = [{"role": "system", "content": "sistem"}]
+    for i in range(20):
+        gecmis.append({"role": "user", "content": f"mesaj {i}"})
+
+    sonuc = gecmisi_kirp(gecmis)
+
+    assert len(sonuc) == GECMIS_SINIRI + 1
+    assert sonuc[0]["content"] == "sistem"
+    assert sonuc[-1]["content"] == "mesaj 19"
