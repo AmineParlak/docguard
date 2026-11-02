@@ -1,5 +1,5 @@
 # docguard
-
+![Tests](https://github.com/AmineParlak/docguard/actions/workflows/tests.yml/badge.svg)
 🇹🇷 [Türkçe](README.tr.md)
 
 An AI document assistant with layered defenses against prompt injection.
