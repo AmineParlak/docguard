@@ -23,9 +23,10 @@ def remove_confidential_section(document):
         return document.split(marker)[0]
     return document
 
-def normalize(text):    
-    text = text.casefold()  # Normalize case for comparison 
+def normalize(text):
+    text = text.casefold()
     text = text.replace("\u0307", "")
+    text = text.replace("ı", "i")
     return text
 
 SUSPICIOUS_PATTERNS = [
