@@ -49,7 +49,7 @@ def test_history_trimmed():
 def test_uppercase_turkish_i_is_detected():
     assert is_suspicious("TALİMATLARI UNUT") == True
 
-@pytest.mark.xfail(strict=True, reason="Gap 2: Non-UTF-8 files cause crashes")
+
 def test_non_utf8_file_does_not_crash(tmp_path):
     bad_file = tmp_path / "bad.txt"
     bad_file.write_bytes(b"\xff\xfe\xfa")

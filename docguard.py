@@ -17,6 +17,9 @@ def read_document(file_name):
     except OSError:
         print(f"Hata: '{file_name}' adlı dosya açılamadı.")
         return None
+    except UnicodeDecodeError:
+        print(f"Hata: '{file_name}' UTF-8 olarak okunamadı.")
+        return None
 
 def remove_confidential_section(document):
     marker = "--- GİZLİ"
