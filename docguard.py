@@ -46,9 +46,9 @@ SUSPICIOUS_PATTERNS = [
 
 
 def is_suspicious(question):
-    normalized = question.replace("İ", "i").lower()
+    normalized = normalize(question)
     for pattern in SUSPICIOUS_PATTERNS:
-        if pattern in normalized:
+        if normalize(pattern) in normalized:
             return True
     return False
 
