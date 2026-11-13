@@ -83,3 +83,7 @@ def test_oversized_file_is_rejected(tmp_path):
     big_file.write_text("a" * (10 * 1024 * 1024), encoding="utf-8")
     result = read_document(big_file)
     assert result is None
+
+def test_normalize_uppercase_turkish_i():
+    assert docguard.normalize("TALİMATLARI") == "talimatlari"
+     
