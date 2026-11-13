@@ -25,6 +25,7 @@ def remove_confidential_section(document):
     return document
 
 def normalize(text):
+    text = unicodedata.normalize("NFKC", text)
     text = text.casefold()
     text = text.replace("\u0307", "")
     text = text.replace("ı", "i")

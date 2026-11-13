@@ -105,3 +105,6 @@ def test_uppercase_answer_is_detected():
 
 def test_normalize_removes_zero_width_space():
     assert docguard.normalize("tali\u200bmatlari") ==  "talimatlari"        
+
+def test_normalize_fullwidth_letters():
+    assert docguard.normalize("\uff54\uff41\uff4c") == "tal" 
