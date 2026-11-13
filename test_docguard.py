@@ -1,6 +1,6 @@
 import pytest
 import importlib
-import docguard
+import docguard 
 from docguard import build_system_prompt, is_suspicious, is_document_suspicious, remove_confidential_section, is_answer_suspicious, trim_history,read_document, HISTORY_LIMIT, FORBIDDEN_ANSWER_PATTERNS
 
 
@@ -101,3 +101,7 @@ def test_uppercase_document_is_detected():
 
 def test_uppercase_answer_is_detected():
     assert is_answer_suspicious("ŞİFRENİZİ VER") == True    
+
+
+def test_normalize_removes_zero_width_space():
+    assert docguard.normalize("tali\u200bmatlari") ==  "talimatlari"        

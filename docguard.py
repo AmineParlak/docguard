@@ -1,4 +1,5 @@
 import os
+import unicodedata
 from dotenv import load_dotenv
 from groq import Groq, APIError
 from datetime import datetime
@@ -27,6 +28,8 @@ def normalize(text):
     text = text.casefold()
     text = text.replace("\u0307", "")
     text = text.replace("ı", "i")
+    text = "".join(c for c in text if unicodedata.category(c) != "Cf")
+
     return text
 
 SUSPICIOUS_PATTERNS = [
