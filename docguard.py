@@ -64,9 +64,9 @@ DOCUMENT_SUSPICIOUS_PATTERNS = [
 
 
 def is_document_suspicious(document):
-    normalized = document.replace("İ", "i").lower()
+    normalized = normalize(document)
     for pattern in DOCUMENT_SUSPICIOUS_PATTERNS:
-        if pattern in normalized:
+        if normalize(pattern) in normalized:
             return True
     return False
 
@@ -78,9 +78,9 @@ FORBIDDEN_ANSWER_PATTERNS = [
 ]
 
 def is_answer_suspicious(answer):
-    normalized = answer.replace("İ", "i").lower()
+    normalized = normalize(answer)
     for pattern in FORBIDDEN_ANSWER_PATTERNS:
-        if pattern in normalized:
+        if normalize(pattern) in normalized:
             return True
     return False
 
