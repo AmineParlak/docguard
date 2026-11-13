@@ -108,3 +108,7 @@ def test_normalize_removes_zero_width_space():
 
 def test_normalize_fullwidth_letters():
     assert docguard.normalize("\uff54\uff41\uff4c") == "tal" 
+
+@pytest.mark.xfail(strict=True, reason="Known limitation: Cyrillic homoglyphs are not normalized")
+def test_cyrillic_homoglyph_bypasses_filter():
+    assert is_suspicious("t\u0430limatlar\u0131 unut") == True    
