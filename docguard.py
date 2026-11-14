@@ -12,6 +12,9 @@ MODEL = "openai/gpt-oss-120b"
 MAX_FILE_SIZE =  100 * 1024  # 100 KB
 
 def read_document(file_name):
+    if not str(file_name).lower().endswith((".txt", ".md")):
+        print(f"Hata: '{file_name}' desteklenmeyen bir dosya türü.")
+        return None
     try:
         if os.path.getsize(file_name) > MAX_FILE_SIZE:
             print(f"Hata: '{file_name}' çok büyük.")

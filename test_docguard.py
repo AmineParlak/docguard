@@ -111,3 +111,9 @@ def test_normalize_fullwidth_letters():
 @pytest.mark.xfail(strict=True, reason="Known limitation: Cyrillic homoglyphs are not normalized")
 def test_cyrillic_homoglyph_bypasses_filter():
     assert is_suspicious("t\u0430limatlar\u0131 unut") == True    
+
+def test_wrong_extension_is_rejected(tmp_path):
+    exe_file = tmp_path / "notes.exe"
+    exe_file.write_text("merhaba", encoding="utf-8")
+    result = read_document(exe_file)
+    assert result is None    
