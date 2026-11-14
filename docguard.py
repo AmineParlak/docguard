@@ -9,9 +9,13 @@ load_dotenv(override=True)
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 MODEL = "openai/gpt-oss-120b"
 
+MAX_FILE_SIZE =  100 * 1024  # 100 KB
 
 def read_document(file_name):
     try:
+        if os.path.getsize(file_name) > MAX_FILE_SIZE:
+            print(f"Hata: '{file_name}' çok büyük.")
+            return None
         with open(file_name, "r", encoding="utf-8") as file:
             return file.read()
     except OSError:

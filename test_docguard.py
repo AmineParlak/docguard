@@ -77,7 +77,6 @@ def test_import_without_api_key_does_not_crash(monkeypatch):
     importlib.reload(docguard)
 
 
-@pytest.mark.xfail(strict=True, reason="Gap 6: Oversized files are not rejected")
 def test_oversized_file_is_rejected(tmp_path):
     big_file = tmp_path / "big.txt"
     big_file.write_text("a" * (10 * 1024 * 1024), encoding="utf-8")
