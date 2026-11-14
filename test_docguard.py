@@ -124,5 +124,10 @@ def test_binary_content_is_rejected(tmp_path):
     fake_txt.write_bytes(b"merhaba\x00dunya")
     result = read_document(fake_txt)
     assert result is None
-    
-        
+
+def test_directory_is_rejected(tmp_path):
+    folder = tmp_path / "folder.txt"
+    folder.mkdir()
+    result = read_document(folder)
+    assert result is None
+
