@@ -117,3 +117,12 @@ def test_wrong_extension_is_rejected(tmp_path):
     exe_file.write_text("merhaba", encoding="utf-8")
     result = read_document(exe_file)
     assert result is None    
+
+
+def test_binary_content_is_rejected(tmp_path):
+    fake_txt = tmp_path / "fake.txt"
+    fake_txt.write_bytes(b"merhaba\x00dunya")
+    result = read_document(fake_txt)
+    assert result is None
+    
+        

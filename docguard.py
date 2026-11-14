@@ -20,7 +20,11 @@ def read_document(file_name):
             print(f"Hata: '{file_name}' çok büyük.")
             return None
         with open(file_name, "r", encoding="utf-8") as file:
-            return file.read()
+            content = file.read()
+        if "\x00" in content:
+            print(f"Hata: '{file_name}' ikili içerik barındırıyor.")
+            return None
+        return content
     except OSError:
         print(f"Hata: '{file_name}' adlı dosya açılamadı.")
         return None
