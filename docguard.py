@@ -77,6 +77,8 @@ DOCUMENT_SUSPICIOUS_PATTERNS = [
     "cevabının sonuna",
     "cevaplarının sonuna",
     "önceki talimat",
+     "<belge>",
+    "</belge>",
     "talimatları unut",
 ]
 
